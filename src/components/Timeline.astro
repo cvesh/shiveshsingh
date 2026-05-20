@@ -1,0 +1,68 @@
+---
+import TimelineEntry from './TimelineEntry.astro';
+
+const entries = [
+  {
+    dateRange: 'Dec 2018 — May 2026',
+    company: 'ZenLedger, Inc.',
+    role: 'Senior Full-Stack Software Engineer',
+    about: 'Crypto-tax & accounting SaaS — Next.js, Ruby on Rails, Go',
+    bullets: [
+      'Architect backend services processing millions of crypto transactions',
+      'Design REST APIs across 400+ exchange and wallet integrations',
+      'Cut long-running job times via indexing, batching, denormalization',
+      'Mentor engineers through code reviews and best-practice guidelines',
+    ],
+  },
+  {
+    dateRange: 'Sep 2014 — May 2018',
+    company: 'Bajra Technologies Pvt. Ltd.',
+    role: 'Software Engineer',
+    about: 'Product engineering studio building full-stack apps for global clients',
+    bullets: [
+      'Built & shipped AirScout Enterprise Cloud for Textron',
+      'Delivered multiple client projects as backend engineer',
+      'Owned zero-downtime AWS EC2 deployments via Capistrano',
+      'Contributed to the company site (AngularJS + API backend)',
+    ],
+  },
+  {
+    dateRange: 'May 2013 — Aug 2014',
+    company: 'Access-Keys Pvt. Ltd.',
+    role: 'Web Developer (Trainee → Developer)',
+    about: 'Web development studio serving local and overseas clients',
+    bullets: [
+      'Built PHP / WordPress / CodeIgniter websites and CMSs',
+      'Converted designs to pixel-accurate, responsive frontends',
+    ],
+  },
+];
+---
+
+<section id="experience" aria-labelledby="experience-heading" class="border-t border-line">
+  <div class="mx-auto max-w-5xl px-6 py-20 md:py-24">
+    <header class="reveal mb-12 md:mb-16">
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Experience</p>
+      <h2 id="experience-heading" class="mt-2 text-3xl font-bold tracking-tight text-body sm:text-4xl">
+        Where I've built things
+      </h2>
+    </header>
+
+    <div class="relative">
+      <span
+        aria-hidden="true"
+        class="absolute top-0 bottom-0 left-3 w-px bg-line md:left-1/2 md:-translate-x-px"
+      ></span>
+
+      <ol class="relative">
+        {entries.map((e, i) => (
+          <TimelineEntry
+            {...e}
+            side={i % 2 === 0 ? 'right' : 'left'}
+            isLast={i === entries.length - 1}
+          />
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

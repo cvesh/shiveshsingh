@@ -1,0 +1,83 @@
+---
+import { MapPin, Mail, Download } from 'lucide-static';
+import { Github, Linkedin } from '../data/brandIcons';
+
+const stats = [
+  { value: '13+', label: 'Years experience' },
+  { value: '6+',  label: 'Production projects' },
+  { value: '3',   label: 'Companies' },
+];
+
+const links = [
+  { href: 'mailto:cvesh.singh@gmail.com',          label: 'Email',    svg: Mail,     external: false },
+  { href: 'https://github.com/cvesh',              label: 'GitHub',   svg: Github,   external: true  },
+  { href: 'https://www.linkedin.com/in/shiveshsingh', label: 'LinkedIn', svg: Linkedin, external: true  },
+  { href: '/Shivesh_Lal_Singh_CV.pdf',             label: 'Download CV', svg: Download, external: false },
+];
+---
+
+<section class="relative overflow-hidden">
+  <div class="mx-auto max-w-6xl px-6 pt-20 pb-24 md:pt-28 md:pb-32">
+    <div class="grid items-center gap-12 md:grid-cols-[1fr_auto] md:gap-16">
+      <div class="reveal">
+        <div class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-muted">
+          <span class="size-3 inline-flex items-center justify-center text-accent" set:html={MapPin} />
+          Kathmandu, Nepal
+        </div>
+
+        <h1 class="mt-6 text-4xl font-bold tracking-tight text-body sm:text-5xl md:text-6xl">
+          <span class="block uppercase tracking-[0.04em]">Shivesh Lal Singh</span>
+        </h1>
+
+        <p class="mt-4 text-lg font-medium text-accent sm:text-xl">
+          Senior Full-Stack Engineer
+        </p>
+
+        <p class="mt-3 max-w-xl text-base text-muted sm:text-lg">
+          13+ years building production web systems end-to-end.
+        </p>
+
+        <ul class="mt-8 flex flex-wrap gap-3">
+          {links.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                aria-label={l.label}
+                title={l.label}
+                target={l.external ? '_blank' : undefined}
+                rel={l.external ? 'noopener noreferrer' : undefined}
+                class="inline-flex size-11 items-center justify-center rounded-full border border-line bg-surface text-body transition hover:border-accent hover:text-accent hover:-translate-y-0.5"
+              >
+                <span class="size-5 inline-flex items-center justify-center" set:html={l.svg} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="reveal flex justify-center md:justify-end">
+        <div class="relative">
+          <div class="absolute inset-0 -m-2 rounded-full bg-accent/10 blur-2xl" aria-hidden="true"></div>
+          <img
+            src="/profile.jpg"
+            alt="Portrait of Shivesh Lal Singh"
+            width="160"
+            height="160"
+            class="relative size-40 rounded-full object-cover shadow-[0_10px_40px_-10px_rgba(31,78,121,0.45)] ring-1 ring-line"
+          />
+        </div>
+      </div>
+    </div>
+
+    <dl class="reveal mt-16 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {stats.map((s) => (
+        <div class="rounded-2xl border border-line bg-surface p-6 transition hover:border-accent">
+          <dt class="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">
+            {s.label}
+          </dt>
+          <dd class="mt-2 text-6xl font-bold tabular-nums text-body">{s.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

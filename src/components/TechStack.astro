@@ -1,0 +1,98 @@
+---
+import { Code2, LayoutDashboard, Server, Database, Cloud } from 'lucide-static';
+
+type Skill = { name: string; mono: string };
+type Group = { title: string; icon: string; skills: Skill[] };
+
+const groups: Group[] = [
+  {
+    title: 'Languages',
+    icon: Code2,
+    skills: [
+      { name: 'JavaScript', mono: 'JS' },
+      { name: 'TypeScript', mono: 'TS' },
+      { name: 'Ruby',       mono: 'Rb' },
+      { name: 'PHP',        mono: 'PHP' },
+      { name: 'Go',         mono: 'Go' },
+    ],
+  },
+  {
+    title: 'Frontend',
+    icon: LayoutDashboard,
+    skills: [
+      { name: 'React',        mono: 'Re' },
+      { name: 'Next.js',      mono: 'Nx' },
+      { name: 'Angular',      mono: 'Ng' },
+      { name: 'Tailwind CSS', mono: 'Tw' },
+      { name: 'HTML/CSS',     mono: '</>' },
+    ],
+  },
+  {
+    title: 'Backend',
+    icon: Server,
+    skills: [
+      { name: 'Ruby on Rails',      mono: 'RoR' },
+      { name: 'REST & GraphQL APIs', mono: 'API' },
+      { name: 'Sidekiq',            mono: 'Sk' },
+      { name: 'WordPress',          mono: 'WP' },
+    ],
+  },
+  {
+    title: 'Databases',
+    icon: Database,
+    skills: [
+      { name: 'PostgreSQL', mono: 'Pg' },
+      { name: 'MySQL',      mono: 'My' },
+      { name: 'MongoDB',    mono: 'Mo' },
+      { name: 'Redis',      mono: 'Rd' },
+    ],
+  },
+  {
+    title: 'Cloud / Ops',
+    icon: Cloud,
+    skills: [
+      { name: 'AWS',    mono: 'AWS' },
+      { name: 'Azure',  mono: 'Az' },
+      { name: 'Docker', mono: 'Dk' },
+      { name: 'Git',    mono: 'Git' },
+      { name: 'CI/CD',  mono: 'CI' },
+    ],
+  },
+];
+---
+
+<section id="stack" aria-labelledby="stack-heading" class="border-t border-line bg-surface">
+  <div class="mx-auto max-w-6xl px-6 py-20 md:py-24">
+    <header class="reveal mb-12 md:mb-16">
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Tech Stack</p>
+      <h2 id="stack-heading" class="mt-2 text-3xl font-bold tracking-tight text-body sm:text-4xl">
+        Tools, frameworks, and platforms
+      </h2>
+    </header>
+
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
+      {groups.map((g) => (
+        <div class="reveal">
+          <div class="mb-4 flex items-center gap-2">
+            <span class="size-4 inline-flex items-center justify-center text-accent" set:html={g.icon} />
+            <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-body">{g.title}</h3>
+          </div>
+          <ul class="grid grid-cols-2 gap-2 lg:grid-cols-2">
+            {g.skills.map((s) => (
+              <li
+                class="group flex h-16 flex-col items-center justify-center rounded-xl border border-line bg-bg p-2 text-center transition hover:scale-[1.05] hover:border-accent"
+              >
+                <span class="flex size-7 items-center justify-center rounded-md bg-accent-soft text-[10px] font-semibold uppercase tracking-wider text-accent">
+                  {s.mono}
+                </span>
+                <span class="mt-1 text-[11px] font-medium text-body leading-tight">
+                  {s.name}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

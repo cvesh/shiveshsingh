@@ -1,0 +1,48 @@
+---
+import { Server, LayoutDashboard, Database, Wrench, Network, Users } from 'lucide-static';
+
+const items = [
+  { icon: Server,          label: 'Backend & API design',    level: 5 },
+  { icon: LayoutDashboard, label: 'Frontend frameworks',     level: 4 },
+  { icon: Database,        label: 'Database design',         level: 4 },
+  { icon: Wrench,          label: 'DevOps & deployment',     level: 4 },
+  { icon: Network,         label: 'System architecture',     level: 4 },
+  { icon: Users,           label: 'Mentoring & code reviews', level: 4 },
+];
+
+const MAX = 5;
+---
+
+<section id="capabilities" aria-labelledby="capabilities-heading" class="border-t border-line">
+  <div class="mx-auto max-w-5xl px-6 py-20 md:py-24">
+    <header class="reveal mb-12 md:mb-16">
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Capabilities</p>
+      <h2 id="capabilities-heading" class="mt-2 text-3xl font-bold tracking-tight text-body sm:text-4xl">
+        Where I focus
+      </h2>
+    </header>
+
+    <ul class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+      {items.map((it) => (
+        <li class="reveal flex items-center gap-4 rounded-2xl border border-line bg-surface p-5">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+            <span class="size-5 inline-flex items-center justify-center" set:html={it.icon} />
+          </span>
+          <span class="grow text-sm font-semibold text-body">{it.label}</span>
+          <span
+            class="flex items-center gap-1.5"
+            role="img"
+            aria-label={`${it.level} of ${MAX}`}
+          >
+            {Array.from({ length: MAX }).map((_, i) => (
+              <span
+                aria-hidden="true"
+                class={`size-2 rounded-full ${i < it.level ? 'bg-accent' : 'border border-line bg-bg'}`}
+              ></span>
+            ))}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+---
+interface Props {
+  dateRange: string;
+  company: string;
+  role: string;
+  about: string;
+  bullets: string[];
+  side?: 'left' | 'right';
+  isLast?: boolean;
+}
+
+const { dateRange, company, role, about, bullets, side = 'right', isLast = false } = Astro.props;
+const cardCol = side === 'right' ? 'md:col-start-2' : 'md:col-start-1 md:row-start-1';
+const textAlign = side === 'right' ? 'md:text-left' : 'md:text-right';
+const bulletJustify = side === 'right' ? 'md:justify-start' : 'md:justify-end';
+---
+
+<li class={`relative pl-10 md:pl-0 md:grid md:grid-cols-2 md:gap-12 ${isLast ? '' : 'pb-12 md:pb-16'}`}>
+  <span
+    aria-hidden="true"
+    class="absolute left-3 top-1.5 size-3 -translate-x-1/2 rounded-full bg-accent ring-4 ring-bg md:left-1/2 md:top-2"
+  ></span>
+
+  <article class={`reveal ${cardCol} ${textAlign}`}>
+    <div class={`flex flex-wrap items-center gap-2 ${bulletJustify}`}>
+      <span class="rounded-full border border-line bg-surface px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted tabular-nums">
+        {dateRange}
+      </span>
+      <span class="text-sm font-semibold text-accent">{company}</span>
+    </div>
+
+    <h3 class="mt-3 text-xl font-bold text-body sm:text-2xl">{role}</h3>
+    <p class="mt-1 text-sm text-muted">{about}</p>
+
+    <ul class={`mt-4 space-y-2 ${side === 'left' ? 'md:ml-auto' : ''}`}>
+      {bullets.map((b) => (
+        <li class={`flex items-start gap-2 text-sm text-body ${side === 'left' ? 'md:flex-row-reverse md:text-right' : ''}`}>
+          <span class="mt-2 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+          <span>{b}</span>
+        </li>
+      ))}
+    </ul>
+  </article>
+</li>

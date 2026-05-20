@@ -1,0 +1,47 @@
+---
+import { GraduationCap, Palette } from 'lucide-static';
+
+const items = [
+  {
+    icon: GraduationCap,
+    title: 'Bachelor in Information Management (BIM)',
+    meta: 'CGPA 3.68',
+    institution: 'NCCS College',
+    location: 'Paknajol, Kathmandu',
+  },
+  {
+    icon: Palette,
+    title: 'Graphic Design',
+    meta: 'Adobe Photoshop & Illustrator',
+    institution: 'Arena Multimedia',
+    location: 'Kantipath, Kathmandu',
+  },
+];
+---
+
+<section id="education" aria-labelledby="education-heading" class="border-t border-line bg-surface">
+  <div class="mx-auto max-w-5xl px-6 py-20 md:py-24">
+    <header class="reveal mb-12">
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Education</p>
+      <h2 id="education-heading" class="mt-2 text-3xl font-bold tracking-tight text-body sm:text-4xl">
+        Foundations
+      </h2>
+    </header>
+
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+      {items.map((it) => (
+        <article class="reveal flex items-start gap-4 rounded-2xl border border-line bg-bg p-6">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+            <span class="size-5 inline-flex items-center justify-center" set:html={it.icon} />
+          </span>
+          <div>
+            <h3 class="text-base font-bold text-body">{it.title}</h3>
+            <p class="mt-0.5 text-xs font-medium uppercase tracking-[0.14em] text-accent">{it.meta}</p>
+            <p class="mt-2 text-sm text-body">{it.institution}</p>
+            <p class="text-sm text-muted">{it.location}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,63 @@
+---
+import ProjectCard from './ProjectCard.astro';
+
+const projects = [
+  {
+    name: 'ZenLedger',
+    url: 'https://www.zenledger.io/',
+    description:
+      'SaaS platform for crypto tax and accounting; large-scale data import, reconciliation, and tax-form generation.',
+    tags: ['Next.js', 'React', 'Ruby on Rails', 'Go', 'PostgreSQL', 'AWS'],
+    featured: true,
+  },
+  {
+    name: 'AirScout Enterprise Cloud',
+    url: 'https://airscoutenterprise.textron.com/',
+    description:
+      'Cloud API for signal-heatmap processing and automated PDF reporting for Textron field teams.',
+    tags: ['Ruby on Rails', 'PostgreSQL', 'AWS'],
+  },
+  {
+    name: 'TwitchScrape',
+    url: 'https://github.com/cvesh/twitchscrape',
+    description:
+      'Open-source app that scrapes and visualizes public Twitch data via an API backend and React frontend.',
+    tags: ['React', 'Ruby on Rails'],
+  },
+  {
+    name: 'Bajra Technologies',
+    url: 'https://bajratechnologies.com/home',
+    description:
+      'Company marketing site with an AngularJS frontend backed by an API service.',
+    tags: ['AngularJS', 'Ruby on Rails'],
+  },
+  {
+    name: 'Yatri Kathmandu Suite',
+    url: 'http://www.yatrikathmandusuite.com/',
+    description: 'Hotel website with booking enquiry flows.',
+    tags: ['PHP', 'CodeIgniter', 'MySQL'],
+  },
+  {
+    name: 'Propak',
+    url: 'https://www.propak.com/',
+    description:
+      'Corporate website built and customized on WordPress with theme customization and content management.',
+    tags: ['WordPress', 'PHP', 'MySQL'],
+  },
+];
+---
+
+<section id="projects" aria-labelledby="projects-heading" class="border-t border-line bg-surface">
+  <div class="mx-auto max-w-6xl px-6 py-20 md:py-24">
+    <header class="reveal mb-12 md:mb-16">
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Projects</p>
+      <h2 id="projects-heading" class="mt-2 text-3xl font-bold tracking-tight text-body sm:text-4xl">
+        Selected work
+      </h2>
+    </header>
+
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map((p) => <ProjectCard {...p} />)}
+    </div>
+  </div>
+</section>

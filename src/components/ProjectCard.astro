@@ -1,0 +1,45 @@
+---
+import { ExternalLink } from 'lucide-static';
+
+interface Props {
+  name: string;
+  url: string;
+  description: string;
+  tags: string[];
+  featured?: boolean;
+}
+
+const { name, url, description, tags, featured = false } = Astro.props;
+---
+
+<article class="reveal group relative flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition hover:-translate-y-1 hover:border-accent hover:shadow-[0_18px_40px_-22px_rgba(31,78,121,0.45)]">
+  {featured && (
+    <span class="absolute right-4 top-4 inline-flex items-center rounded-full bg-accent px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+      Featured
+    </span>
+  )}
+
+  <h3 class="pr-20 text-lg font-bold text-body">{name}</h3>
+  <p class="mt-2 text-sm text-muted">{description}</p>
+
+  <ul class="mt-4 flex flex-wrap gap-1.5">
+    {tags.map((t) => (
+      <li class="rounded-full border border-line bg-bg px-2.5 py-1 text-[11px] font-medium text-muted">
+        {t}
+      </li>
+    ))}
+  </ul>
+
+  <div class="mt-6 flex grow items-end">
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Visit ${name}`}
+      class="inline-flex items-center gap-2 text-sm font-semibold text-accent transition group-hover:gap-3"
+    >
+      Visit
+      <span class="size-4 inline-flex items-center justify-center" set:html={ExternalLink} />
+    </a>
+  </div>
+</article>
