@@ -1,0 +1,49 @@
+---
+interface Props {
+  n?: number;
+  eyebrow: string;
+  title: string;
+  sub?: string;
+}
+const { n, eyebrow, title, sub } = Astro.props;
+const num = n != null ? String(n).padStart(2, '0') : null;
+---
+
+<div class="section-head">
+  <span class="eyebrow">
+    <span class="dot"></span>
+    {num && <span class="mono num">{num}</span>}
+    <span>{eyebrow}</span>
+  </span>
+  <h2>{title}</h2>
+  {sub && <p>{sub}</p>}
+</div>
+
+<style>
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .num {
+    color: var(--accent);
+    font-weight: 700;
+    margin-right: 6px;
+  }
+  h2 {
+    margin: 0;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 780px;
+  }
+  p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 640px;
+    font-size: 15px;
+  }
+</style>

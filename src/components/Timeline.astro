@@ -1,68 +1,302 @@
 ---
-import TimelineEntry from './TimelineEntry.astro';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
 
-const entries = [
+const experiences = [
   {
-    dateRange: 'Dec 2018 — May 2026',
+    id: 'ZL',
+    range: 'Dec 2018 — May 2026', years: '7y 5m',
     company: 'ZenLedger, Inc.',
     role: 'Senior Full-Stack Software Engineer',
-    about: 'Crypto-tax & accounting SaaS — Next.js, Ruby on Rails, Go',
+    about: 'Crypto-tax & accounting SaaS — Next.js, Rails, Go',
+    stack: ['Next.js', 'Rails', 'Go', 'Postgres', 'AWS'],
     bullets: [
-      'Architect backend services processing millions of crypto transactions',
-      'Design REST APIs across 400+ exchange and wallet integrations',
-      'Cut long-running job times via indexing, batching, denormalization',
-      'Mentor engineers through code reviews and best-practice guidelines',
+      { icon: 'server', t: 'Architect backend services processing millions of crypto transactions' },
+      { icon: 'net', t: 'Design REST APIs across 400+ exchange and wallet integrations' },
+      { icon: 'zap', t: 'Cut long-running job times via indexing, batching, denormalization' },
+      { icon: 'users', t: 'Mentor engineers through code reviews and best-practice guidelines' },
     ],
+    metric: { big: '400+', small: 'integrations' },
+    featured: true,
   },
   {
-    dateRange: 'Sep 2014 — May 2018',
+    id: 'BT',
+    range: 'Sep 2014 — May 2018', years: '3y 8m',
     company: 'Bajra Technologies Pvt. Ltd.',
     role: 'Software Engineer',
-    about: 'Product engineering studio building full-stack apps for global clients',
+    about: 'Product engineering studio for global clients',
+    stack: ['Rails', 'AngularJS', 'AWS', 'Capistrano'],
     bullets: [
-      'Built & shipped AirScout Enterprise Cloud for Textron',
-      'Delivered multiple client projects as backend engineer',
-      'Owned zero-downtime AWS EC2 deployments via Capistrano',
-      'Contributed to the company site (AngularJS + API backend)',
+      { icon: 'star', t: 'Built and shipped AirScout Enterprise Cloud for Textron' },
+      { icon: 'briefcase', t: 'Delivered multiple client projects as backend engineer' },
+      { icon: 'cloud', t: 'Owned zero-downtime AWS EC2 deployments via Capistrano' },
+      { icon: 'layers', t: 'Contributed to the company site (AngularJS + API backend)' },
     ],
+    metric: { big: '0', small: 'downtime deploys' },
+    featured: false,
   },
   {
-    dateRange: 'May 2013 — Aug 2014',
+    id: 'AK',
+    range: 'May 2013 — Aug 2014', years: '1y 3m',
     company: 'Access-Keys Pvt. Ltd.',
-    role: 'Web Developer (Trainee → Developer)',
-    about: 'Web development studio serving local and overseas clients',
+    role: 'Web Developer  ·  Trainee → Developer',
+    about: 'Web studio serving local and overseas clients',
+    stack: ['PHP', 'WordPress', 'CodeIgniter', 'MySQL'],
     bullets: [
-      'Built PHP / WordPress / CodeIgniter websites and CMSs',
-      'Converted designs to pixel-accurate, responsive frontends',
+      { icon: 'code', t: 'Built PHP / WordPress / CodeIgniter websites and CMSs' },
+      { icon: 'brush', t: 'Converted designs to pixel-accurate, responsive frontends' },
     ],
+    metric: { big: '1st', small: 'engineering role' },
+    featured: false,
   },
 ];
 ---
 
-<section id="experience" aria-labelledby="experience-heading" class="border-t border-line">
-  <div class="mx-auto max-w-5xl px-6 py-20 md:py-24">
-    <header class="reveal mb-12 md:mb-16">
-      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Experience</p>
-      <h2 id="experience-heading" class="mt-2 text-3xl font-bold tracking-tight text-body sm:text-4xl">
-        Where I've built things
-      </h2>
-    </header>
+<section aria-label="Experience" class="experience">
+  <div class="wrap inner">
+    <SectionHead n={4} eyebrow="Experience" title="Where I've built things." />
 
-    <div class="relative">
-      <span
-        aria-hidden="true"
-        class="absolute top-0 bottom-0 left-3 w-px bg-line md:left-1/2 md:-translate-x-px"
-      ></span>
+    <div class="spine-wrap">
+      <span aria-hidden="true" class="spine"></span>
 
-      <ol class="relative">
-        {entries.map((e, i) => (
-          <TimelineEntry
-            {...e}
-            side={i % 2 === 0 ? 'right' : 'left'}
-            isLast={i === entries.length - 1}
-          />
+      <ol class="exp-list">
+        {experiences.map(e => (
+          <li class="exp-row">
+            <span aria-hidden="true" class:list={["node", { featured: e.featured }]}></span>
+            <span class="mono node-year">{e.range.split(' — ')[0].split(' ').pop()}</span>
+
+            <article class:list={["card", { featured: e.featured }]}>
+              {e.featured && <span class="mono current-pill">Current</span>}
+
+              <div class="card-body">
+                <div class="card-head">
+                  <span class="badge">{e.id}</span>
+                  <div>
+                    <div class="company">{e.company}</div>
+                    <div class="mono range">{e.range}  ·  {e.years}</div>
+                  </div>
+                </div>
+
+                <div class="role">{e.role}</div>
+                <div class="about">{e.about}</div>
+
+                <ul class="bullets">
+                  {e.bullets.map(b => (
+                    <li>
+                      <span class="bullet-icon"><Icon name={b.icon} size={13} stroke={1.8} /></span>
+                      <span class="bullet-text">{b.t}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div class="stack">
+                  {e.stack.map(t => <span class="mono tag">{t}</span>)}
+                </div>
+              </div>
+
+              <div class="metric">
+                <div class="tabular metric-big">{e.metric.big}</div>
+                <div class="mono metric-small">{e.metric.small}</div>
+              </div>
+            </article>
+          </li>
         ))}
       </ol>
     </div>
   </div>
 </section>
+
+<style>
+  .experience { background: var(--bg); }
+  .inner { padding: 96px 32px; }
+
+  .spine-wrap { position: relative; }
+  .spine {
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 21px;
+    width: 2px;
+    background: var(--line);
+  }
+  .exp-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .exp-row {
+    position: relative;
+    padding-left: 64px;
+  }
+  .node {
+    position: absolute;
+    left: 14px;
+    top: 24px;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 5px var(--bg);
+  }
+  .node.featured { background: var(--accent); }
+  .node-year {
+    position: absolute;
+    left: -6px;
+    top: 46px;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  .card {
+    position: relative;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+  }
+  .card.featured {
+    box-shadow: 0 1px 0 rgba(31, 78, 121, 0.12), 0 18px 40px -28px rgba(31, 78, 121, 0.35);
+  }
+  .current-pill {
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .card-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+  .badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .company { font-size: 17px; font-weight: 700; color: var(--ink); }
+  .range {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .role {
+    margin-top: 16px;
+    font-size: 15px;
+    color: var(--body);
+    font-weight: 600;
+  }
+  .about {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .bullets {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .bullet-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .bullet-text {
+    font-size: 13.5px;
+    color: var(--body);
+    line-height: 1.45;
+  }
+
+  .stack {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-size: 10.5px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    background: var(--tag);
+    letter-spacing: 0.04em;
+  }
+
+  .metric {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    border-left: 1px dashed var(--line);
+    padding-left: 18px;
+  }
+  .metric-big {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .metric-small {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    text-align: right;
+  }
+
+  @media (max-width: 720px) {
+    .inner { padding: 64px 20px; }
+    .exp-row { padding-left: 48px; }
+    .spine { left: 13px; }
+    .metric { display: none; }
+    .card { grid-template-columns: 1fr; }
+  }
+</style>

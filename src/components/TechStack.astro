@@ -1,98 +1,189 @@
 ---
-import { Code2, LayoutDashboard, Server, Database, Cloud } from 'lucide-static';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
 
-type Skill = { name: string; mono: string };
-type Group = { title: string; icon: string; skills: Skill[] };
-
-const groups: Group[] = [
+const skillGroups = [
   {
-    title: 'Languages',
-    icon: Code2,
-    skills: [
-      { name: 'JavaScript', mono: 'JS' },
-      { name: 'TypeScript', mono: 'TS' },
-      { name: 'Ruby',       mono: 'Rb' },
-      { name: 'PHP',        mono: 'PHP' },
-      { name: 'Go',         mono: 'Go' },
+    key: 'lang', title: 'Languages', icon: 'code',
+    items: [
+      { mono: 'JS', name: 'JavaScript', years: 13 },
+      { mono: 'TS', name: 'TypeScript', years: 8 },
+      { mono: 'Rb', name: 'Ruby', years: 10 },
+      { mono: 'PHP', name: 'PHP', years: 6 },
+      { mono: 'Go', name: 'Go', years: 4 },
     ],
   },
   {
-    title: 'Frontend',
-    icon: LayoutDashboard,
-    skills: [
-      { name: 'React',        mono: 'Re' },
-      { name: 'Next.js',      mono: 'Nx' },
-      { name: 'Angular',      mono: 'Ng' },
-      { name: 'Tailwind CSS', mono: 'Tw' },
-      { name: 'HTML/CSS',     mono: '</>' },
+    key: 'fe', title: 'Frontend', icon: 'layers',
+    items: [
+      { mono: 'Re', name: 'React', years: 9 },
+      { mono: 'Nx', name: 'Next.js', years: 6 },
+      { mono: 'Ng', name: 'Angular', years: 4 },
+      { mono: 'Tw', name: 'Tailwind', years: 4 },
+      { mono: '</>', name: 'HTML / CSS', years: 13 },
     ],
   },
   {
-    title: 'Backend',
-    icon: Server,
-    skills: [
-      { name: 'Ruby on Rails',      mono: 'RoR' },
-      { name: 'REST & GraphQL APIs', mono: 'API' },
-      { name: 'Sidekiq',            mono: 'Sk' },
-      { name: 'WordPress',          mono: 'WP' },
+    key: 'be', title: 'Backend', icon: 'server',
+    items: [
+      { mono: 'RoR', name: 'Rails', years: 10 },
+      { mono: 'API', name: 'REST / GraphQL', years: 11 },
+      { mono: 'SK', name: 'Sidekiq', years: 7 },
+      { mono: 'WP', name: 'WordPress', years: 6 },
     ],
   },
   {
-    title: 'Databases',
-    icon: Database,
-    skills: [
-      { name: 'PostgreSQL', mono: 'Pg' },
-      { name: 'MySQL',      mono: 'My' },
-      { name: 'MongoDB',    mono: 'Mo' },
-      { name: 'Redis',      mono: 'Rd' },
+    key: 'db', title: 'Databases', icon: 'database',
+    items: [
+      { mono: 'Pg', name: 'PostgreSQL', years: 9 },
+      { mono: 'My', name: 'MySQL', years: 11 },
+      { mono: 'Mo', name: 'MongoDB', years: 4 },
+      { mono: 'Rd', name: 'Redis', years: 7 },
     ],
   },
   {
-    title: 'Cloud / Ops',
-    icon: Cloud,
-    skills: [
-      { name: 'AWS',    mono: 'AWS' },
-      { name: 'Azure',  mono: 'Az' },
-      { name: 'Docker', mono: 'Dk' },
-      { name: 'Git',    mono: 'Git' },
-      { name: 'CI/CD',  mono: 'CI' },
+    key: 'cloud', title: 'Cloud / Ops', icon: 'cloud',
+    items: [
+      { mono: 'AWS', name: 'AWS', years: 8 },
+      { mono: 'Az', name: 'Azure', years: 3 },
+      { mono: 'Dk', name: 'Docker', years: 6 },
+      { mono: 'Git', name: 'Git', years: 13 },
+      { mono: 'CI', name: 'CI / CD', years: 8 },
     ],
   },
 ];
 ---
 
-<section id="stack" aria-labelledby="stack-heading" class="border-t border-line bg-surface">
-  <div class="mx-auto max-w-6xl px-6 py-20 md:py-24">
-    <header class="reveal mb-12 md:mb-16">
-      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Tech Stack</p>
-      <h2 id="stack-heading" class="mt-2 text-3xl font-bold tracking-tight text-body sm:text-4xl">
-        Tools, frameworks, and platforms
-      </h2>
-    </header>
+<section id="stack" aria-label="Tech Stack">
+  <div class="wrap inner">
+    <SectionHead
+      n={3}
+      eyebrow="Tech Stack"
+      title="The toolkit, by category."
+      sub="Years experience shown per item. No bars, no self-ratings — just time on the tools."
+    />
 
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
-      {groups.map((g) => (
-        <div class="reveal">
-          <div class="mb-4 flex items-center gap-2">
-            <span class="size-4 inline-flex items-center justify-center text-accent" set:html={g.icon} />
-            <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-body">{g.title}</h3>
+    <div class="stack-grid">
+      {skillGroups.map((g, gi) => (
+        <div class="group-cell">
+          <div class="group-head">
+            <span class="group-icon">
+              <Icon name={g.icon} size={16} stroke={1.8} />
+            </span>
+            <div class="group-meta">
+              <span class="mono group-index">{String(gi + 1).padStart(2, '0')}</span>
+              <span class="group-title">{g.title}</span>
+            </div>
           </div>
-          <ul class="grid grid-cols-2 gap-2 lg:grid-cols-2">
-            {g.skills.map((s) => (
-              <li
-                class="group flex h-16 flex-col items-center justify-center rounded-xl border border-line bg-bg p-2 text-center transition hover:scale-[1.05] hover:border-accent"
-              >
-                <span class="flex size-7 items-center justify-center rounded-md bg-accent-soft text-[10px] font-semibold uppercase tracking-wider text-accent">
-                  {s.mono}
-                </span>
-                <span class="mt-1 text-[11px] font-medium text-body leading-tight">
-                  {s.name}
-                </span>
-              </li>
+          <div class="tiles">
+            {g.items.map(it => (
+              <div class="tile">
+                <div class="tile-mono">{it.mono}</div>
+                <div class="tile-text">
+                  <span class="tile-name">{it.name}</span>
+                  <span class="mono tabular tile-years">{it.years}y</span>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .inner { padding: 96px 32px; }
+
+  .stack-grid {
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat(5, 1fr);
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .group-cell {
+    background: var(--surface);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .group-head { display: flex; align-items: center; gap: 10px; }
+  .group-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .group-meta { display: flex; flex-direction: column; }
+  .group-index {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .group-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .tiles {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .tile {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .tile:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .tile-mono {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .tile-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .tile-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .tile-years {
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 1100px) { .stack-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px) {
+    .stack-grid { grid-template-columns: 1fr; }
+    .inner { padding: 64px 20px; }
+  }
+</style>

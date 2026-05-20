@@ -1,0 +1,201 @@
+---
+import SectionHead from './SectionHead.astro';
+
+const startYear = 2013;
+const endYear = 2026;
+const totalYears = endYear - startYear; // 13
+
+const spans = [
+  { id: 'AK', label: 'Access-Keys', role: 'Web Developer', start: { y: 2013, m: 5 }, end: { y: 2014, m: 8 }, color: '#9CA3AF', featured: false },
+  { id: 'BT', label: 'Bajra Tech.', role: 'Software Engineer', start: { y: 2014, m: 9 }, end: { y: 2018, m: 5 }, color: '#6B7280', featured: false },
+  { id: 'ZL', label: 'ZenLedger', role: 'Senior FS Engineer', start: { y: 2018, m: 12 }, end: { y: 2026, m: 5 }, color: 'var(--accent)', featured: true },
+];
+
+const toPct = (y: number, m: number) => {
+  const months = (y - startYear) * 12 + (m - 1);
+  return (months / (totalYears * 12)) * 100;
+};
+
+const yearTicks = Array.from({ length: totalYears + 1 }, (_, i) => {
+  const y = startYear + i;
+  return { y, show: i % 2 === 0 };
+});
+
+const legend = spans.slice().reverse().map(s => {
+  const months = (s.end.y - s.start.y) * 12 + (s.end.m - s.start.m);
+  const years = Math.floor(months / 12);
+  const remM = months % 12;
+  return { ...s, months, years, remM };
+});
+---
+
+<section id="path" aria-label="At a glance" class="career">
+  <div class="wrap inner">
+    <SectionHead n={2} eyebrow="At a glance" title="Thirteen years, three companies, one trajectory." />
+
+    <div class="bar-area">
+      <div class="mono year-axis" style={`grid-template-columns: repeat(${totalYears + 1}, 1fr);`}>
+        {yearTicks.map(t => (
+          <span class:list={["tick", { dim: !t.show }]}>{t.show ? `'${String(t.y).slice(2)}` : '·'}</span>
+        ))}
+      </div>
+
+      <div class="track">
+        <div class="grid-lines" style={`grid-template-columns: repeat(${totalYears}, 1fr);`}>
+          {Array.from({ length: totalYears }).map((_, i) => (
+            <span class:list={["grid-cell", { last: i === totalYears - 1 }]}></span>
+          ))}
+        </div>
+
+        <div class="spans">
+          {spans.map((s, i) => {
+            const left = toPct(s.start.y, s.start.m);
+            const right = toPct(s.end.y, s.end.m);
+            const w = right - left;
+            const top = 8 + i * 22;
+            return (
+              <div
+                class:list={["span-bar", { featured: s.featured }]}
+                style={`left:${left}%; width:${w}%; top:${top}px; background:${s.color};`}
+              >
+                <span class="mono span-id">{s.id}</span>
+                <span class="span-label">{s.label} · {s.role}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div class="legend">
+        {legend.map(s => (
+          <div class="legend-card">
+            <div class="legend-head">
+              <span class="swatch" style={`background:${s.color};`}></span>
+              <span class="mono legend-range">{s.start.y}–{s.end.y}</span>
+            </div>
+            <div class="legend-label">{s.label}</div>
+            <div class="legend-role">{s.role}</div>
+            <div class="mono tabular legend-dur">{s.years}y{s.remM ? ` ${s.remM}m` : ''} · {s.months} months</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .career {
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .inner { padding: 80px 32px; }
+
+  .bar-area { position: relative; margin-top: 24px; }
+
+  .year-axis {
+    display: grid;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+  .tick { text-align: center; font-weight: 600; }
+  .tick.dim { opacity: 0.45; font-weight: 400; }
+
+  .track {
+    position: relative;
+    height: 96px;
+    border-radius: 12px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 12px;
+  }
+  .grid-lines {
+    position: absolute;
+    inset: 12px;
+    display: grid;
+    pointer-events: none;
+  }
+  .grid-cell {
+    border-right: 1px dashed var(--line);
+  }
+  .grid-cell.last { border-right: none; }
+
+  .spans {
+    position: relative;
+    height: 100%;
+  }
+  .span-bar {
+    position: absolute;
+    height: 18px;
+    border-radius: 4px;
+    opacity: 0.85;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    gap: 8px;
+    color: #fff;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .span-bar.featured { opacity: 1; }
+  .span-id {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .span-label {
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.95;
+  }
+
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 24px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .legend-card {
+    background: var(--surface);
+    padding: 20px 22px;
+  }
+  .legend-head { display: flex; align-items: center; gap: 10px; }
+  .swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+  }
+  .legend-range {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .legend-label {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .legend-role { font-size: 13px; color: var(--muted); }
+  .legend-dur {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 900px) {
+    .legend { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .inner { padding: 64px 20px; }
+    .span-label { display: none; }
+  }
+</style>

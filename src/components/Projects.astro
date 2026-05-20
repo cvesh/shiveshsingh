@@ -1,63 +1,78 @@
 ---
+import SectionHead from './SectionHead.astro';
 import ProjectCard from './ProjectCard.astro';
 
 const projects = [
   {
-    name: 'ZenLedger',
-    url: 'https://www.zenledger.io/',
-    description:
-      'SaaS platform for crypto tax and accounting; large-scale data import, reconciliation, and tax-form generation.',
-    tags: ['Next.js', 'React', 'Ruby on Rails', 'Go', 'PostgreSQL', 'AWS'],
-    featured: true,
+    name: 'ZenLedger', url: 'https://www.zenledger.io/', featured: true, mono: 'ZL',
+    desc: 'SaaS platform for crypto tax and accounting; large-scale data import, reconciliation, and tax-form generation.',
+    role: 'Senior FS Engineer', period: '2018 → 26',
+    tags: ['Next.js', 'React', 'Rails', 'Go', 'Postgres', 'AWS'],
+    metric: [{ n: '400+', l: 'integrations' }, { n: 'M+', l: 'tx / mo' }],
   },
   {
-    name: 'AirScout Enterprise Cloud',
-    url: 'https://airscoutenterprise.textron.com/',
-    description:
-      'Cloud API for signal-heatmap processing and automated PDF reporting for Textron field teams.',
-    tags: ['Ruby on Rails', 'PostgreSQL', 'AWS'],
+    name: 'AirScout Enterprise Cloud', url: 'https://airscoutenterprise.textron.com/', mono: 'AS',
+    desc: 'Cloud API for signal-heatmap processing and automated PDF reporting for Textron field teams.',
+    role: 'Backend Engineer', period: '2016 → 18',
+    tags: ['Rails', 'Postgres', 'AWS'],
+    metric: [{ n: 'PDF', l: 'auto reports' }],
   },
   {
-    name: 'TwitchScrape',
-    url: 'https://github.com/cvesh/twitchscrape',
-    description:
-      'Open-source app that scrapes and visualizes public Twitch data via an API backend and React frontend.',
-    tags: ['React', 'Ruby on Rails'],
+    name: 'TwitchScrape', url: 'https://github.com/cvesh/twitchscrape', mono: 'TS',
+    desc: 'Open-source app that scrapes and visualizes public Twitch data via an API backend and React frontend.',
+    role: 'Solo · OSS', period: '2017',
+    tags: ['React', 'Rails'],
+    metric: [{ n: 'OSS', l: 'github' }],
   },
   {
-    name: 'Bajra Technologies',
-    url: 'https://bajratechnologies.com/home',
-    description:
-      'Company marketing site with an AngularJS frontend backed by an API service.',
-    tags: ['AngularJS', 'Ruby on Rails'],
+    name: 'Bajra Technologies', url: 'https://bajratechnologies.com/home', mono: 'BT',
+    desc: 'Company marketing site with an AngularJS frontend backed by an API service.',
+    role: 'Engineering', period: '2017',
+    tags: ['AngularJS', 'Rails'],
+    metric: [{ n: 'SPA', l: 'angular 1.x' }],
   },
   {
-    name: 'Yatri Kathmandu Suite',
-    url: 'http://www.yatrikathmandusuite.com/',
-    description: 'Hotel website with booking enquiry flows.',
+    name: 'Yatri Kathmandu Suite', url: 'http://www.yatrikathmandusuite.com/', mono: 'YK',
+    desc: 'Hotel website with booking enquiry flows.',
+    role: 'Web Developer', period: '2014',
     tags: ['PHP', 'CodeIgniter', 'MySQL'],
+    metric: [{ n: '★', l: 'hospitality' }],
   },
   {
-    name: 'Propak',
-    url: 'https://www.propak.com/',
-    description:
-      'Corporate website built and customized on WordPress with theme customization and content management.',
+    name: 'Propak', url: 'https://www.propak.com/', mono: 'PP',
+    desc: 'Corporate website built and customized on WordPress with theme customization and content management.',
+    role: 'Web Developer', period: '2013',
     tags: ['WordPress', 'PHP', 'MySQL'],
+    metric: [{ n: 'CMS', l: 'wordpress' }],
   },
 ];
 ---
 
-<section id="projects" aria-labelledby="projects-heading" class="border-t border-line bg-surface">
-  <div class="mx-auto max-w-6xl px-6 py-20 md:py-24">
-    <header class="reveal mb-12 md:mb-16">
-      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Projects</p>
-      <h2 id="projects-heading" class="mt-2 text-3xl font-bold tracking-tight text-body sm:text-4xl">
-        Selected work
-      </h2>
-    </header>
+<section id="work" aria-label="Selected Work" class="work">
+  <div class="wrap inner">
+    <SectionHead n={5} eyebrow="Selected work" title="Six projects across SaaS, enterprise, and open source." />
 
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {projects.map((p) => <ProjectCard {...p} />)}
+    <div class="work-grid">
+      {projects.map(p => <ProjectCard {...p} />)}
     </div>
   </div>
 </section>
+
+<style>
+  .work {
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .inner { padding: 96px 32px; }
+  .work-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 1024px) { .work-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 720px) {
+    .work-grid { grid-template-columns: 1fr; }
+    .inner { padding: 64px 20px; }
+  }
+</style>

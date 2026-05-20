@@ -1,83 +1,326 @@
 ---
-import { MapPin, Mail, Download } from 'lucide-static';
-import { Github, Linkedin } from '../data/brandIcons';
+import Icon from './Icon.astro';
+
+const navItems = ['Work', 'Stack', 'Path', 'About'];
 
 const stats = [
-  { value: '13+', label: 'Years experience' },
-  { value: '6+',  label: 'Production projects' },
-  { value: '3',   label: 'Companies' },
-];
-
-const links = [
-  { href: 'mailto:cvesh.singh@gmail.com',          label: 'Email',    svg: Mail,     external: false },
-  { href: 'https://github.com/cvesh',              label: 'GitHub',   svg: Github,   external: true  },
-  { href: 'https://www.linkedin.com/in/shiveshsingh', label: 'LinkedIn', svg: Linkedin, external: true  },
-  { href: '/Shivesh_Lal_Singh_CV.pdf',             label: 'Download CV', svg: Download, external: false },
+  { n: '13', plus: '+', label: 'Years building production systems', sub: '2013 → 2026' },
+  { n: '6', plus: '+', label: 'Shipped projects in the wild', sub: 'SaaS · Enterprise · OSS' },
+  { n: '400', plus: '+', label: 'Exchange & wallet integrations', sub: 'at ZenLedger' },
+  { n: '3', plus: '', label: 'Companies, three roles', sub: 'Trainee → Senior' },
 ];
 ---
 
-<section class="relative overflow-hidden">
-  <div class="mx-auto max-w-6xl px-6 pt-20 pb-24 md:pt-28 md:pb-32">
-    <div class="grid items-center gap-12 md:grid-cols-[1fr_auto] md:gap-16">
-      <div class="reveal">
-        <div class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-muted">
-          <span class="size-3 inline-flex items-center justify-center text-accent" set:html={MapPin} />
-          Kathmandu, Nepal
-        </div>
+<section class="hero" aria-label="Hero">
+  <div class="wrap nav">
+    <div class="brand">
+      <span class="brand-mark">S</span>
+      <span class="mono brand-name">shiveshsingh.com.np</span>
+    </div>
+    <nav>
+      {navItems.map(x => (
+        <a href={`#${x.toLowerCase()}`} class="mono nav-link">{x}</a>
+      ))}
+    </nav>
+  </div>
+  <hr class="rule" />
 
-        <h1 class="mt-6 text-4xl font-bold tracking-tight text-body sm:text-5xl md:text-6xl">
-          <span class="block uppercase tracking-[0.04em]">Shivesh Lal Singh</span>
+  <div class="wrap hero-inner">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <span class="eyebrow">
+          <span class="dot"></span>
+          <span>Senior Full-Stack Engineer · Available 2026</span>
+        </span>
+
+        <h1>
+          Shivesh<br />
+          <span class="accent">Lal Singh</span>
         </h1>
 
-        <p class="mt-4 text-lg font-medium text-accent sm:text-xl">
-          Senior Full-Stack Engineer
+        <p class="lede">
+          Thirteen years building production web systems end-to-end — from crypto-tax pipelines to enterprise reporting clouds.
         </p>
 
-        <p class="mt-3 max-w-xl text-base text-muted sm:text-lg">
-          13+ years building production web systems end-to-end.
-        </p>
-
-        <ul class="mt-8 flex flex-wrap gap-3">
-          {links.map((l) => (
-            <li>
-              <a
-                href={l.href}
-                aria-label={l.label}
-                title={l.label}
-                target={l.external ? '_blank' : undefined}
-                rel={l.external ? 'noopener noreferrer' : undefined}
-                class="inline-flex size-11 items-center justify-center rounded-full border border-line bg-surface text-body transition hover:border-accent hover:text-accent hover:-translate-y-0.5"
-              >
-                <span class="size-5 inline-flex items-center justify-center" set:html={l.svg} />
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div class="actions">
+          <a class="cta-primary" href="mailto:cvesh.singh@gmail.com">
+            <Icon name="mail" size={16} stroke={1.8} /> cvesh.singh@gmail.com
+          </a>
+          <a class="cta-secondary" href="/Shivesh_Lal_Singh_CV.pdf">
+            <Icon name="download" size={16} /> CV.pdf
+          </a>
+          <a class="cta-icon" href="https://github.com/cvesh" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+            <Icon name="github" size={18} />
+          </a>
+          <a class="cta-icon" href="https://linkedin.com/in/shiveshsingh" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <Icon name="linkedin" size={18} />
+          </a>
+        </div>
       </div>
 
-      <div class="reveal flex justify-center md:justify-end">
-        <div class="relative">
-          <div class="absolute inset-0 -m-2 rounded-full bg-accent/10 blur-2xl" aria-hidden="true"></div>
-          <img
-            src="/profile.jpg"
-            alt="Portrait of Shivesh Lal Singh"
-            width="160"
-            height="160"
-            class="relative size-40 rounded-full object-cover shadow-[0_10px_40px_-10px_rgba(31,78,121,0.45)] ring-1 ring-line"
-          />
+      <div class="portrait-wrap">
+        <div class="portrait-card">
+          <span class="crop tl"></span>
+          <span class="crop tr"></span>
+          <span class="crop bl"></span>
+          <span class="crop br"></span>
+
+          <div class="photo" style="background-image: url(/profile.jpg);"></div>
+
+          <div class="mono meta">
+            <span>27.7172° N</span>
+            <span class="center">· Kathmandu ·</span>
+            <span>85.3240° E</span>
+          </div>
+
+          <div class="rot-tag">
+            <div class="mono">NP-BAG · GMT+05:45</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <dl class="reveal mt-16 grid grid-cols-1 gap-4 sm:grid-cols-3">
-      {stats.map((s) => (
-        <div class="rounded-2xl border border-line bg-surface p-6 transition hover:border-accent">
-          <dt class="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">
-            {s.label}
-          </dt>
-          <dd class="mt-2 text-6xl font-bold tabular-nums text-body">{s.value}</dd>
+    <div class="stat-grid">
+      {stats.map((s, i) => (
+        <div class="stat-card">
+          <div class="mono stat-index">{String(i + 1).padStart(2, '0')} / 04</div>
+          <div class="stat-figure">
+            <span class="tabular stat-n">{s.n}</span>
+            {s.plus && <span class="tabular stat-plus accent">{s.plus}</span>}
+          </div>
+          <div class="stat-label">{s.label}</div>
+          <div class="mono stat-sub">{s.sub}</div>
         </div>
       ))}
-    </dl>
+    </div>
   </div>
 </section>
+
+<style>
+  .hero { position: relative; overflow: hidden; }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--ink);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+  }
+  .brand-name {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  nav { display: flex; gap: 24px; }
+  .nav-link {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--body);
+  }
+
+  .hero-inner { padding-top: 72px; padding-bottom: 80px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 64px;
+    align-items: end;
+  }
+
+  h1 {
+    margin: 24px 0 0;
+    font-size: clamp(48px, 7vw, 104px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .accent { color: var(--accent); }
+  .lede {
+    margin-top: 28px;
+    font-size: clamp(16px, 1.4vw, 19px);
+    color: var(--body);
+    max-width: 520px;
+    line-height: 1.5;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 32px;
+  }
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--ink);
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--line-strong);
+    padding: 13px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--surface);
+  }
+  .cta-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  /* portrait */
+  .portrait-wrap { position: relative; }
+  .portrait-card {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    max-width: 380px;
+    margin-left: auto;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .crop {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+  }
+  .crop.tl { top: -5px; left: -5px; border-top: 1.5px solid var(--accent); border-left: 1.5px solid var(--accent); }
+  .crop.tr { top: -5px; right: -5px; border-top: 1.5px solid var(--accent); border-right: 1.5px solid var(--accent); }
+  .crop.bl { bottom: -5px; left: -5px; border-bottom: 1.5px solid var(--accent); border-left: 1.5px solid var(--accent); }
+  .crop.br { bottom: -5px; right: -5px; border-bottom: 1.5px solid var(--accent); border-right: 1.5px solid var(--accent); }
+
+  .photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 4px;
+    background-color: var(--accent-soft);
+    background-size: cover;
+    background-position: center;
+  }
+  .meta {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .meta .center { text-align: center; }
+
+  .rot-tag {
+    position: absolute;
+    left: -28px;
+    bottom: 54px;
+    transform: rotate(-90deg);
+    transform-origin: left bottom;
+  }
+  .rot-tag .mono {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* stats */
+  .stat-grid {
+    margin-top: 64px;
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .stat-card {
+    background: var(--surface);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 148px;
+  }
+  .stat-index {
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .stat-figure {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    margin-top: auto;
+  }
+  .stat-n {
+    font-size: clamp(48px, 5.5vw, 72px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .stat-plus {
+    font-size: clamp(24px, 2.5vw, 36px);
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stat-plus.accent { color: var(--accent); }
+  .stat-label {
+    font-size: 13px;
+    color: var(--body);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .stat-sub {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 720px) {
+    nav { display: none; }
+  }
+</style>

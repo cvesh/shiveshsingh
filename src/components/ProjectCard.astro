@@ -1,45 +1,190 @@
 ---
-import { ExternalLink } from 'lucide-static';
+import Icon from './Icon.astro';
 
 interface Props {
   name: string;
   url: string;
-  description: string;
+  mono: string;
+  desc: string;
+  role: string;
+  period: string;
   tags: string[];
+  metric: { n: string; l: string }[];
   featured?: boolean;
 }
 
-const { name, url, description, tags, featured = false } = Astro.props;
+const { name, url, mono, desc, role, period, tags, metric, featured = false } = Astro.props;
 ---
 
-<article class="reveal group relative flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition hover:-translate-y-1 hover:border-accent hover:shadow-[0_18px_40px_-22px_rgba(31,78,121,0.45)]">
-  {featured && (
-    <span class="absolute right-4 top-4 inline-flex items-center rounded-full bg-accent px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
-      Featured
-    </span>
-  )}
-
-  <h3 class="pr-20 text-lg font-bold text-body">{name}</h3>
-  <p class="mt-2 text-sm text-muted">{description}</p>
-
-  <ul class="mt-4 flex flex-wrap gap-1.5">
-    {tags.map((t) => (
-      <li class="rounded-full border border-line bg-bg px-2.5 py-1 text-[11px] font-medium text-muted">
-        {t}
-      </li>
-    ))}
-  </ul>
-
-  <div class="mt-6 flex grow items-end">
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Visit ${name}`}
-      class="inline-flex items-center gap-2 text-sm font-semibold text-accent transition group-hover:gap-3"
-    >
-      Visit
-      <span class="size-4 inline-flex items-center justify-center" set:html={ExternalLink} />
-    </a>
+<a href={url} target="_blank" rel="noopener noreferrer" class:list={["card", { featured }]}>
+  <div class:list={["visual", { stripes: !featured, gradient: featured }]}>
+    <span class="mono visual-mono">{mono}</span>
+    <span class="mono corner left">· {period}</span>
+    <span class="mono corner right">{role}</span>
+    {featured && <span class="mono pill">★ Featured</span>}
   </div>
-</article>
+
+  <div class="body">
+    <div class="head">
+      <h3>{name}</h3>
+      <span class="ext"><Icon name="ext" size={13} /></span>
+    </div>
+    <p class="desc">{desc}</p>
+
+    <div class="tags">
+      {tags.map(t => <span class="mono tag">{t}</span>)}
+    </div>
+
+    <hr class="rule" />
+
+    <div class="metric-row">
+      {metric.map(m => (
+        <div>
+          <div class="mono tabular metric-n">{m.n}</div>
+          <div class="mono metric-l">{m.l}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    overflow: hidden;
+    transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+    position: relative;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 22px 50px -28px rgba(31, 78, 121, 0.5);
+  }
+
+  .visual {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .visual.gradient {
+    background: linear-gradient(135deg, var(--accent) 0%, #14334f 100%);
+  }
+  .visual-mono {
+    font-size: 72px;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+  .visual.gradient .visual-mono {
+    color: rgba(255, 255, 255, 0.95);
+    opacity: 1;
+  }
+  .corner {
+    position: absolute;
+    top: 14px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .corner.left { left: 14px; }
+  .corner.right { right: 14px; }
+  .visual.gradient .corner { color: rgba(255, 255, 255, 0.7); }
+
+  .pill {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    font-size: 10px;
+    font-weight: 700;
+    background: #fff;
+    color: var(--accent);
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .body {
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 10px;
+  }
+  .head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .ext {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--body);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .desc {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: auto;
+  }
+  .tag {
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    background: var(--tag);
+    letter-spacing: 0.04em;
+  }
+
+  .rule { margin: 4px 0 0; }
+
+  .metric-row {
+    display: flex;
+    gap: 18px;
+  }
+  .metric-n {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+  }
+  .metric-l {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

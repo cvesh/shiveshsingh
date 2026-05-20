@@ -1,48 +1,209 @@
 ---
-import { Server, LayoutDashboard, Database, Wrench, Network, Users } from 'lucide-static';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
 
-const items = [
-  { icon: Server,          label: 'Backend & API design',    level: 5 },
-  { icon: LayoutDashboard, label: 'Frontend frameworks',     level: 4 },
-  { icon: Database,        label: 'Database design',         level: 4 },
-  { icon: Wrench,          label: 'DevOps & deployment',     level: 4 },
-  { icon: Network,         label: 'System architecture',     level: 4 },
-  { icon: Users,           label: 'Mentoring & code reviews', level: 4 },
+const capabilities = [
+  { icon: 'server', label: 'Backend & API design', level: 5 },
+  { icon: 'layers', label: 'Frontend frameworks', level: 4 },
+  { icon: 'database', label: 'Database design', level: 4 },
+  { icon: 'wrench', label: 'DevOps & deployment', level: 4 },
+  { icon: 'net', label: 'System architecture', level: 4 },
+  { icon: 'users', label: 'Mentoring & reviews', level: 4 },
 ];
 
+const size = 320;
+const cx = size / 2;
+const cy = size / 2;
+const R = 120;
+const N = capabilities.length;
 const MAX = 5;
+
+const angle = (i: number) => -Math.PI / 2 + (i * (2 * Math.PI / N));
+const point = (i: number, lvl: number) => {
+  const r = (lvl / MAX) * R;
+  return [cx + Math.cos(angle(i)) * r, cy + Math.sin(angle(i)) * r];
+};
+
+const rings = [1, 2, 3, 4, 5];
+const ringPolygons = rings.map(r =>
+  capabilities.map((_, i) => point(i, r).join(',')).join(' ')
+);
+
+const axisLines = capabilities.map((_, i) => {
+  const [x, y] = point(i, MAX);
+  return { x1: cx, y1: cy, x2: x, y2: y };
+});
+
+const dataPath = capabilities.map((d, i) => {
+  const [x, y] = point(i, d.level);
+  return `${i === 0 ? 'M' : 'L'}${x},${y}`;
+}).join(' ') + ' Z';
+
+const dataPoints = capabilities.map((d, i) => {
+  const [x, y] = point(i, d.level);
+  return { x, y };
+});
+
+const labelPoints = capabilities.map((d, i) => {
+  const [x, y] = point(i, MAX + 0.7);
+  const anchor = Math.abs(x - cx) < 4 ? 'middle' : (x < cx ? 'end' : 'start');
+  return { x, y, anchor, label: d.label.toUpperCase() };
+});
 ---
 
-<section id="capabilities" aria-labelledby="capabilities-heading" class="border-t border-line">
-  <div class="mx-auto max-w-5xl px-6 py-20 md:py-24">
-    <header class="reveal mb-12 md:mb-16">
-      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Capabilities</p>
-      <h2 id="capabilities-heading" class="mt-2 text-3xl font-bold tracking-tight text-body sm:text-4xl">
-        Where I focus
-      </h2>
-    </header>
+<section id="about" aria-label="Capabilities">
+  <div class="wrap inner">
+    <SectionHead
+      n={6}
+      eyebrow="Capabilities"
+      title="Where I focus."
+      sub="Self-assessment based on years on the tools and depth of work delivered."
+    />
 
-    <ul class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
-      {items.map((it) => (
-        <li class="reveal flex items-center gap-4 rounded-2xl border border-line bg-surface p-5">
-          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
-            <span class="size-5 inline-flex items-center justify-center" set:html={it.icon} />
-          </span>
-          <span class="grow text-sm font-semibold text-body">{it.label}</span>
-          <span
-            class="flex items-center gap-1.5"
-            role="img"
-            aria-label={`${it.level} of ${MAX}`}
-          >
-            {Array.from({ length: MAX }).map((_, i) => (
-              <span
-                aria-hidden="true"
-                class={`size-2 rounded-full ${i < it.level ? 'bg-accent' : 'border border-line bg-bg'}`}
-              ></span>
-            ))}
-          </span>
-        </li>
-      ))}
-    </ul>
+    <div class="cap-grid">
+      <div class="radar-wrap">
+        <svg viewBox={`0 0 ${size} ${size}`} width="100%" class="radar" role="img" aria-label="Capabilities radar chart">
+          {ringPolygons.map(pts => (
+            <polygon points={pts} fill="none" stroke="var(--line)" stroke-width="1" />
+          ))}
+          {axisLines.map(l => (
+            <line x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke="var(--line)" stroke-width="1" stroke-dasharray="2 3" />
+          ))}
+          <path d={dataPath} fill="var(--accent)" fill-opacity="0.15" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" />
+          {dataPoints.map(p => (
+            <circle cx={p.x} cy={p.y} r="4" fill="#fff" stroke="var(--accent)" stroke-width="2" />
+          ))}
+          {labelPoints.map(l => (
+            <text
+              x={l.x}
+              y={l.y}
+              font-family="JetBrains Mono Variable, monospace"
+              font-size="9"
+              fill="var(--muted)"
+              text-anchor={l.anchor}
+              dominant-baseline="middle"
+              style="letter-spacing: 0.06em; font-weight: 600;"
+            >{l.label}</text>
+          ))}
+          <circle cx={cx} cy={cy} r="2.5" fill="var(--accent)" />
+        </svg>
+        <span class="mono caption tl">fig.01 · skills surface</span>
+        <span class="mono caption br">scale 0—5</span>
+      </div>
+
+      <div class="bars">
+        {capabilities.map((c, i) => (
+          <div class="bar-row">
+            <span class="bar-icon"><Icon name={c.icon} size={15} stroke={1.8} /></span>
+            <div class="bar-text">
+              <div class="bar-head">
+                <span class="bar-label">{c.label}</span>
+                <span class="mono tabular bar-val">{c.level}/5</span>
+              </div>
+              <div class="dots">
+                {Array.from({ length: 5 }).map((_, k) => (
+                  <span class:list={["dot", { on: k < c.level }]}></span>
+                ))}
+              </div>
+            </div>
+            <span class="mono bar-index">{String(i + 1).padStart(2, '0')}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   </div>
 </section>
+
+<style>
+  .inner { padding: 96px 32px; }
+
+  .cap-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .radar-wrap {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .radar { max-width: 380px; display: block; }
+  .caption {
+    position: absolute;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .caption.tl { top: 14px; left: 14px; }
+  .caption.br { bottom: 14px; right: 14px; }
+
+  .bars { display: flex; flex-direction: column; gap: 14px; }
+  .bar-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 14px;
+  }
+  .bar-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bar-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .bar-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .bar-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .bar-val {
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .dots { display: flex; gap: 3px; }
+  .dot {
+    flex: 1;
+    height: 6px;
+    border-radius: 2px;
+    background: var(--line);
+  }
+  .dot.on { background: var(--accent); }
+  .bar-index {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    width: 30px;
+    text-align: right;
+  }
+
+  @media (max-width: 900px) {
+    .cap-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  @media (max-width: 720px) {
+    .inner { padding: 64px 20px; }
+  }
+</style>
