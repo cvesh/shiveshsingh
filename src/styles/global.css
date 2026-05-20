@@ -3,9 +3,9 @@
 @import "@fontsource-variable/jetbrains-mono/index.css";
 
 :root {
-  --accent: #1F4E79;
-  --accent-2: #2D6FA8;
-  --accent-soft: #EEF3F8;
+  --accent: #1A1A1A;
+  --accent-2: #1A1A1A;
+  --accent-soft: #ECEAE3;
   --bg: #F7F6F2;
   --surface: #FFFFFF;
   --body: #14181F;
@@ -20,8 +20,8 @@
 }
 
 @theme {
-  --color-accent: #1F4E79;
-  --color-accent-soft: #EEF3F8;
+  --color-accent: #1A1A1A;
+  --color-accent-soft: #ECEAE3;
   --color-bg: #F7F6F2;
   --color-surface: #FFFFFF;
   --color-body: #14181F;
