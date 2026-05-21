@@ -66,7 +66,7 @@ const experiences = [
             <span class="mono node-year">{e.range.split(' — ')[0].split(' ').pop()}</span>
 
             <article class:list={["card", { featured: e.featured }]}>
-              {e.featured && <span class="mono current-pill">Current</span>}
+              {e.featured && <span class="mono current-pill">Featured</span>}
 
               <div class="card-body">
                 <div class="card-head">

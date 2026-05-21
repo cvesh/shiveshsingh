@@ -58,7 +58,7 @@ const Hero = ({ accent }) => {
 
           {/* LEFT — type */}
           <div>
-            <Eyebrow>Senior Full-Stack Engineer · Available 2026</Eyebrow>
+            <Eyebrow>Senior Full-Stack Engineer</Eyebrow>
             <h1 style={{
               margin:'24px 0 0', fontSize:'clamp(48px, 7vw, 104px)',
               lineHeight:0.95, letterSpacing:'-0.04em', fontWeight:800,
@@ -97,7 +97,7 @@ const Hero = ({ accent }) => {
                 width:46, height:46, borderRadius:999, border:'1px solid var(--line-strong)',
                 background:'var(--surface)',
               }}><I.github size={18} /></a>
-              <a href="https://linkedin.com/in/shiveshsingh" style={{
+              <a href="https://linkedin.com/in/singhshivesh" style={{
                 display:'inline-flex', alignItems:'center', justifyContent:'center',
                 width:46, height:46, borderRadius:999, border:'1px solid var(--line-strong)',
                 background:'var(--surface)',

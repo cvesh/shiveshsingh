@@ -35,16 +35,7 @@ const { name, url, mono, desc, role, period, tags, metric, featured = false } = 
       {tags.map(t => <span class="mono tag">{t}</span>)}
     </div>
 
-    <hr class="rule" />
-
-    <div class="metric-row">
-      {metric.map(m => (
-        <div>
-          <div class="mono tabular metric-n">{m.n}</div>
-          <div class="mono metric-l">{m.l}</div>
-        </div>
-      ))}
-    </div>
+    
   </div>
 </a>
 

@@ -530,7 +530,7 @@ const Contact = ({ accent }) => {
               Open to senior <br />full-stack roles.
             </h2>
             <p style={{fontSize:16, color:'var(--muted)', marginTop:16, maxWidth:480}}>
-              Remote-friendly · Available from June 2026 · Based in Kathmandu, GMT+05:45.
+              Remote-friendly · Based in Kathmandu, GMT+05:45.
             </p>
           </div>
 
@@ -564,7 +564,7 @@ const Contact = ({ accent }) => {
                 <span>github.com/cvesh</span>
                 <I.ext size={13} />
               </a>
-              <a href="https://linkedin.com/in/shiveshsingh" target="_blank" rel="noopener noreferrer" style={contactTile}>
+              <a href="https://linkedin.com/in/singhshivesh" target="_blank" rel="noopener noreferrer" style={contactTile}>
                 <I.linkedin size={18} />
                 <span>linkedin · shiveshsingh</span>
                 <I.ext size={13} />
@@ -589,7 +589,7 @@ const Contact = ({ accent }) => {
           paddingTop:24, color:'var(--muted)',
         }}>
           <div className="mono" style={{fontSize:11, letterSpacing:'0.08em'}}>
-            © 2026 Shivesh Lal Singh
+            © 2026 Shivesh Singh
           </div>
           <div className="mono" style={{fontSize:11, letterSpacing:'0.08em'}}>
             Built deliberately · Kathmandu, NP
